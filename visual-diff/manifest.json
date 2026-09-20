@@ -1,0 +1,11 @@
+[
+  { "name": "hero", "figmaNodeId": "1:2", "width": 1600 },
+  { "name": "about", "figmaNodeId": "1:5", "width": 1600 },
+  { "name": "services", "figmaNodeId": "1:3", "width": 1600 },
+  { "name": "advantages", "figmaNodeId": "2:2", "width": 1600 },
+  { "name": "gallery", "figmaNodeId": "2:4", "width": 1600 },
+  { "name": "faq", "figmaNodeId": "2:6", "width": 1600 },
+  { "name": "process", "figmaNodeId": "57:2", "width": 1600 },
+  { "name": "cta-form", "figmaNodeId": "2:7", "width": 1600 },
+  { "name": "footer", "figmaNodeId": "2:9", "width": 1600 }
+]

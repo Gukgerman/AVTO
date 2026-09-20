@@ -1,0 +1,17 @@
+node_modules
+.next
+out
+.env
+.env*.local
+.vercel
+*.tsbuildinfo
+npm-debug.log*
+screenshots
+
+qa/
+.playwright-mcp/
+
+visual-diff/baseline/
+visual-diff/current/
+visual-diff/diff/
+visual-diff/report.json

@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  color: #0e141d;
+  background: #ffffff;
+}
+
+/* Custom scrollbar: dark track, amber thumb, matching the site's palette */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #f29e2e #0e141d;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0e141d;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f29e2e;
+  border-radius: 999px;
+  border: 2px solid #0e141d;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #d98a1f;
+}
+
+/* Lenis smooth scroll: JS drives the easing, so native smooth-scroll must stay off */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+html.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+html.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+@keyframes status-pulse {
+  0%, 100% {
+    background-color: #f29e2e;
+    box-shadow: 0 0 5px 2px rgba(242, 158, 46, 0.45);
+  }
+  50% {
+    background-color: #34d399;
+    box-shadow: 0 0 5px 2px rgba(52, 211, 153, 0.45);
+  }
+}
+
+.animate-status-pulse {
+  animation: status-pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
