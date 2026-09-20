@@ -54,7 +54,7 @@ export function Footer() {
         */}
         <div
           className="pointer-events-none absolute hidden overflow-hidden lg:block"
-          style={{ top: 0, right: "-100px", width: "847.8px", height: "550.8px" }}
+          style={{ top: "40px", right: "-100px", width: "847.8px", height: "550.8px" }}
         >
           <Image
             src="/images/footer-car.png"
