@@ -15,3 +15,7 @@ visual-diff/baseline/
 visual-diff/current/
 visual-diff/diff/
 visual-diff/report.json
+
+# raw source uploads dropped at repo root (real copies live under public/)
+/*.mp4
+/q*.png
