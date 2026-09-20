@@ -180,7 +180,7 @@ export function Process() {
         <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden">
           <div ref={trackRef} className="flex w-full">
             {processCards.map((card) => (
-              <div key={card.number} className="w-full shrink-0 px-4">
+              <div key={card.number} className="w-full shrink-0">
                 <ProcessCardContent card={card} />
               </div>
             ))}
