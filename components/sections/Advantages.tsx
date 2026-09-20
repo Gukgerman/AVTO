@@ -11,7 +11,7 @@ const features = [
 
 export function Advantages() {
   return (
-    <section className="bg-white px-3 py-10 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
+    <section className="bg-white px-3 pt-10 pb-5 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
       <div className="relative mx-auto overflow-hidden rounded-[20px] bg-navy-dark p-6 sm:rounded-[28px] sm:p-9 lg:rounded-[32px] lg:p-11 max-w-container">
         <Image
           src="/images/advantages-bg.jpg"

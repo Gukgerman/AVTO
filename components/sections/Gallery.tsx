@@ -13,7 +13,7 @@ const tiles = [
 
 export function Gallery() {
   return (
-    <section id="gallery" className="bg-white px-4 pt-16 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
+    <section id="gallery" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
       <div className="mx-auto flex max-w-container flex-col gap-10">
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-4">

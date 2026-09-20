@@ -18,7 +18,7 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-navy-dark/56 sm:bg-navy-dark/50" />
+        <div className="absolute inset-0 bg-navy-dark/65 sm:bg-navy-dark/50" />
 
         {/* top nav */}
         <div className="relative z-20 flex items-center justify-between">
@@ -73,7 +73,7 @@ export function Hero() {
           </Reveal>
 
           <Reveal y={16} delay={1.54}>
-            <p className="max-w-[500px] text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="max-w-[500px] text-base leading-snug text-white/70 sm:text-lg sm:leading-relaxed">
               Mercedes, BMW, Porsche та інші авто преміум-класу — швидка подача, без застав і
               посередників.
             </p>

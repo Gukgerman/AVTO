@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { submitBooking } from "@/lib/submit-booking";
@@ -44,12 +43,22 @@ export function CtaForm() {
   return (
     <section id="form" className="bg-white px-3 py-10 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
       <div className="relative mx-auto max-w-container overflow-hidden rounded-[20px] sm:rounded-[28px] lg:rounded-[32px]">
-        <Image
-          src="/images/cta-form-bg.png"
-          alt=""
-          fill
-          sizes="1600px"
-          className="object-cover"
+        <video
+          src="/video/cta-form-mobile.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 block h-full w-full object-cover lg:hidden"
+          style={{ objectPosition: "50% 71%" }}
+        />
+        <video
+          src="/video/cta-form-desktop.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 hidden h-full w-full object-cover lg:block"
           style={{ objectPosition: "50% 71%" }}
         />
         <div className="absolute inset-0 bg-navy-dark/70" />
@@ -62,9 +71,9 @@ export function CtaForm() {
             </h2>
             <p className="text-sm leading-relaxed text-white/70 sm:text-base lg:max-w-[355px]">
               <span className="sm:hidden">
-                Залиште контакти — підберемо
+                Залиште контакти — підберемо авто під вашу подію і зафіксуємо
                 <br />
-                авто під вашу подію і зафіксуємо ціну без доплат
+                ціну без доплат.
               </span>
               <span className="hidden sm:inline">
                 Залиште контакти — підберемо авто під вашу подію і зафіксуємо ціну без доплат

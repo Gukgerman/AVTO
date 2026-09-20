@@ -117,7 +117,7 @@ export function Services() {
           </Reveal>
 
           <Reveal delay={0.12} className="flex flex-1 flex-col gap-5">
-            <div className="relative aspect-[896/422] w-full overflow-hidden rounded-[40px]">
+            <div className="relative aspect-[896/422] w-full overflow-hidden rounded-2xl sm:rounded-[40px]">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={index}

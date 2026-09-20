@@ -28,7 +28,7 @@ export function Footer() {
         }}
       >
         {/* decorative grid lines */}
-        <div className="pointer-events-none absolute inset-0 hidden lg:block">
+        <div className="pointer-events-none absolute inset-0 block sm:hidden lg:block">
           {[0.22, 0.44, 0.66, 0.88].map((p) => (
             <span key={p} className="absolute left-0 right-0 h-px bg-white/[0.07]" style={{ top: `${p * 100}%` }} />
           ))}
@@ -37,7 +37,7 @@ export function Footer() {
           ))}
         </div>
 
-        <span className="pointer-events-none absolute -left-6 bottom-8 select-none font-display text-[110px] font-black leading-none text-white/[0.08] sm:text-[180px] lg:bottom-10 lg:text-[230px]">
+        <span className="pointer-events-none absolute -left-6 bottom-8 select-none font-display text-[60px] font-black leading-none text-white/[0.08] sm:text-[180px] lg:bottom-10 lg:text-[230px]">
           PRESTIGE
         </span>
 
@@ -115,9 +115,10 @@ export function Footer() {
             </a>
           </Reveal>
 
-          {/* Mobile-only: same transparent car asset as Desktop, scaled to ~90% of
-              the Desktop container's proportional height and adapted to mobile width. */}
-          <div className="mt-10 sm:hidden">
+          {/* Mobile-only: same transparent car asset as Desktop, adapted to mobile
+              width and bled to the card's right edge (cancels the card's own
+              horizontal padding) to match the Desktop composition. */}
+          <div className="-mr-6 mt-10 sm:hidden">
             <div className="relative w-full overflow-hidden" style={{ aspectRatio: "1.71" }}>
               <Image
                 src="/images/footer-car.png"
@@ -125,7 +126,7 @@ export function Footer() {
                 width={1949}
                 height={807}
                 className="pointer-events-none absolute max-w-none"
-                style={{ left: "-2.71%", top: "7.63%", width: "133.05%", height: "auto" }}
+                style={{ left: "-2.71%", top: "7.63%", width: "146.4%", height: "auto" }}
               />
             </div>
           </div>
