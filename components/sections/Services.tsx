@@ -31,7 +31,7 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="bg-white px-4 pt-8 pb-16 sm:px-6 sm:py-20 lg:px-[60px] lg:pt-11 lg:pb-[53px]">
+    <section id="services" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:pt-11 lg:pb-[53px]">
       <div className="mx-auto flex max-w-container flex-col gap-8 lg:gap-10">
         <Reveal>
           <Eyebrow>Послуги</Eyebrow>
@@ -117,7 +117,7 @@ export function Services() {
           </Reveal>
 
           <Reveal delay={0.12} className="flex flex-1 flex-col gap-5">
-            <div className="relative aspect-[896/422] w-full overflow-hidden rounded-2xl sm:rounded-[40px]">
+            <div className="relative aspect-[896/633] w-full overflow-hidden rounded-2xl sm:aspect-[896/422] sm:rounded-[40px]">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.div
                   key={index}

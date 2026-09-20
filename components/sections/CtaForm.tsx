@@ -41,7 +41,7 @@ export function CtaForm() {
   }
 
   return (
-    <section id="form" className="bg-white px-3 py-10 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
+    <section id="form" className="bg-white px-3 py-5 sm:px-4 sm:py-14 lg:px-6 lg:pt-[38px] lg:pb-[32px]">
       <div className="relative mx-auto max-w-container overflow-hidden rounded-[20px] sm:rounded-[28px] lg:rounded-[32px]">
         <video
           src="/video/cta-form-mobile.mp4"
@@ -71,9 +71,9 @@ export function CtaForm() {
             </h2>
             <p className="text-sm leading-relaxed text-white/70 sm:text-base lg:max-w-[355px]">
               <span className="sm:hidden">
-                Залиште контакти — підберемо авто під вашу подію і зафіксуємо
+                Залиште контакти — підберемо авто
                 <br />
-                ціну без доплат.
+                під вашу подію і зафіксуємо ціну без доплат
               </span>
               <span className="hidden sm:inline">
                 Залиште контакти — підберемо авто під вашу подію і зафіксуємо ціну без доплат

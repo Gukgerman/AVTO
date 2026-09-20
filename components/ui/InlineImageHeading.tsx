@@ -11,7 +11,7 @@ export function InlineImageHeading({
 }) {
   return (
     <h2
-      className={`flex flex-wrap items-center gap-x-2.5 gap-y-2 text-[28px] font-bold leading-[1.05] text-navy sm:text-[32px] sm:leading-[1.2] lg:gap-x-3 lg:text-[34px] ${className}`}
+      className={`flex flex-wrap items-center gap-x-2.5 gap-y-0 sm:gap-y-2 text-[28px] font-bold leading-[1.05] text-navy sm:text-[32px] sm:leading-[1.2] lg:gap-x-3 lg:text-[34px] ${className}`}
     >
       {segments.map((seg, i) =>
         "break" in seg ? (

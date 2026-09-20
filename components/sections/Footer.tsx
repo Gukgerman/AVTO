@@ -20,7 +20,7 @@ const socials = ["Instagram", "Telegram", "Facebook"];
 
 export function Footer() {
   return (
-    <footer id="footer" className="bg-white px-3 py-10 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
+    <footer id="footer" className="bg-white px-3 pt-5 pb-10 sm:px-4 sm:py-14 lg:px-6 lg:pt-[32px] lg:pb-16">
       <div
         className="relative mx-auto flex max-w-container flex-col overflow-hidden rounded-[20px] p-6 sm:rounded-[28px] sm:p-9 lg:rounded-[32px] lg:px-[60px] lg:pb-10 lg:pt-12"
         style={{

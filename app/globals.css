@@ -73,6 +73,22 @@ html.lenis.lenis-scrolling iframe {
   animation: status-pulse 2.2s ease-in-out infinite;
 }
 
+/* Mobile only: same color pulse, without the glow/box-shadow halo. */
+@keyframes status-pulse-no-glow {
+  0%, 100% {
+    background-color: #f29e2e;
+  }
+  50% {
+    background-color: #34d399;
+  }
+}
+
+@media (max-width: 639px) {
+  .animate-status-pulse {
+    animation-name: status-pulse-no-glow;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

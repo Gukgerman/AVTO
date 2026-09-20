@@ -1,17 +1,44 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
 
 const features = [
-  { title: "Прозорі ціни", text: "Фіксована вартість оренди без прихованих доплат" },
-  { title: "Особиста перевірка", text: "Оглядаємо авто наживо перед кожною орендою" },
-  { title: "Юридичний супровід", text: "Готуємо договір оренди та всі документи" },
+  {
+    title: "Прозорі ціни",
+    text: "Фіксована вартість оренди без прихованих доплат",
+    mobileBreakBefore: "без прихованих доплат",
+  },
+  {
+    title: "Особиста перевірка",
+    text: "Оглядаємо авто наживо перед кожною орендою",
+    mobileBreakBefore: "кожною орендою",
+  },
+  {
+    title: "Юридичний супровід",
+    text: "Готуємо договір оренди та всі документи",
+    mobileBreakBefore: "та всі документи",
+  },
 ];
 
 export function Advantages() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    // Some mobile browsers ignore the JSX `muted` attribute for autoplay
+    // eligibility and need the property set imperatively, plus an explicit
+    // play() call (the returned promise can reject silently, which is fine).
+    video.muted = true;
+    video.play().catch(() => {});
+  }, []);
+
   return (
-    <section className="bg-white px-3 pt-10 pb-5 sm:px-4 sm:py-14 lg:px-6 lg:py-16">
+    <section className="bg-white px-3 pt-5 pb-5 sm:px-4 sm:py-14 lg:px-6 lg:pt-16 lg:pb-[38px]">
       <div className="relative mx-auto overflow-hidden rounded-[20px] bg-navy-dark p-6 sm:rounded-[28px] sm:p-9 lg:rounded-[32px] lg:p-11 max-w-container">
         <Image
           src="/images/advantages-bg.jpg"
@@ -57,6 +84,7 @@ export function Advantages() {
 
           <Reveal delay={0.1} className="relative aspect-[460/340] w-full overflow-hidden rounded-2xl lg:w-[calc((100%-2rem)/3)] lg:shrink-0">
             <video
+              ref={videoRef}
               src="/video/advantages.mp4"
               autoPlay
               loop
@@ -87,7 +115,14 @@ export function Advantages() {
                 <h3 className="font-display text-base font-semibold text-white sm:text-[17px]">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">{f.text}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">
+                  <span className="sm:hidden">
+                    {f.text.replace(f.mobileBreakBefore, "")}
+                    <br />
+                    {f.mobileBreakBefore}
+                  </span>
+                  <span className="hidden sm:inline">{f.text}</span>
+                </p>
               </Reveal>
             ))}
           </div>
