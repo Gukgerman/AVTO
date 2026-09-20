@@ -79,10 +79,29 @@ function ProcessCardContent({ card }: { card: ProcessCard }) {
   );
 }
 
+const FALLBACK_PINNED_HEIGHT = 420;
+
 export function Process() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [pinnedHeight, setPinnedHeight] = useState(FALLBACK_PINNED_HEIGHT);
+
+  // The pinned view is sized to the actual card+dots content (measured),
+  // not the full viewport — a full-screen pin left large empty margins
+  // above/below the (much shorter) card while it was pinned.
+  useEffect(() => {
+    function measure() {
+      if (window.innerWidth >= 640) return;
+      const stage = stageRef.current;
+      if (!stage) return;
+      setPinnedHeight(stage.offsetHeight);
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   useEffect(() => {
     let ticking = false;
@@ -98,8 +117,7 @@ export function Process() {
         return;
       }
 
-      const viewportH = window.innerHeight;
-      const total = wrapper.offsetHeight - viewportH;
+      const total = wrapper.offsetHeight - pinnedHeight;
       let progress = 0;
       if (total > 0) {
         const top = wrapper.getBoundingClientRect().top;
@@ -126,7 +144,7 @@ export function Process() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, []);
+  }, [pinnedHeight]);
 
   return (
     <section id="process" className="bg-white px-4 pt-8 pb-4 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
@@ -168,32 +186,36 @@ export function Process() {
 
       {/*
         Mobile-only: the 4 cards are driven by vertical scroll instead of a
-        horizontal swipe. The wrapper is CARD_COUNT viewport-heights tall;
+        horizontal swipe. The wrapper is CARD_COUNT pinned-heights tall;
         while the user scrolls through it, the inner view stays pinned
         (position: sticky) and a scroll listener converts how far the
         wrapper has scrolled past the top into a horizontal translateX on
-        the card track. Once the wrapper's height is exhausted, sticky
-        naturally releases and normal vertical scroll continues into the
-        next section — no extra logic needed for that handoff.
+        the card track. The pinned height matches the actual card+dots
+        content (measured) rather than the full viewport, so the block
+        stays compact instead of leaving empty space above/below it. Once
+        the wrapper's height is exhausted, sticky naturally releases and
+        normal vertical scroll continues into the next section.
       */}
-      <div ref={wrapperRef} className="relative sm:hidden" style={{ height: `${CARD_COUNT * 100}dvh` }}>
-        <div className="sticky top-0 flex h-[100dvh] flex-col justify-center overflow-hidden">
-          <div ref={trackRef} className="flex w-full">
-            {processCards.map((card) => (
-              <div key={card.number} className="w-full shrink-0">
-                <ProcessCardContent card={card} />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex justify-center gap-2">
-            {processCards.map((_, i) => (
-              <span
-                key={i}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
-                  i === activeIndex ? "w-6 bg-navy" : "w-1.5 bg-border"
-                }`}
-              />
-            ))}
+      <div ref={wrapperRef} className="relative sm:hidden" style={{ height: `${CARD_COUNT * pinnedHeight}px` }}>
+        <div className="sticky top-0 overflow-hidden" style={{ height: `${pinnedHeight}px` }}>
+          <div ref={stageRef}>
+            <div ref={trackRef} className="flex w-full">
+              {processCards.map((card) => (
+                <div key={card.number} className="w-full shrink-0">
+                  <ProcessCardContent card={card} />
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 flex justify-center gap-2">
+              {processCards.map((_, i) => (
+                <span
+                  key={i}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === activeIndex ? "w-6 bg-navy" : "w-1.5 bg-border"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
