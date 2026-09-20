@@ -8,7 +8,7 @@ const avatars = ["/images/avatar-1.png", "/images/avatar-2.png", "/images/avatar
 
 export function Hero() {
   return (
-    <section className="bg-white px-3 py-3 sm:px-4 sm:py-4 lg:px-6 lg:py-6">
+    <section className="bg-white px-3 pt-3 pb-1.5 sm:px-4 sm:py-4 lg:px-6 lg:py-6">
       <div className="relative flex min-h-[640px] flex-col overflow-hidden rounded-[20px] bg-navy-dark p-5 sm:min-h-[760px] sm:rounded-[28px] sm:p-8 lg:h-[calc(100dvh-3rem)] lg:min-h-[640px] lg:rounded-[32px] lg:p-11">
         <Image
           src="/images/hero-bg.png"

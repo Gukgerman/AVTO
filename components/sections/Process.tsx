@@ -1,14 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { InlineImageHeading } from "@/components/ui/InlineImageHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { processCards, type ProcessCard } from "@/lib/process-data";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
-
-const CARD_COUNT = processCards.length;
 
 function ProcessCardContent({ card }: { card: ProcessCard }) {
   const CardTag = card.featured ? "a" : "div";
@@ -79,75 +77,18 @@ function ProcessCardContent({ card }: { card: ProcessCard }) {
   );
 }
 
-const FALLBACK_PINNED_HEIGHT = 420;
-
 export function Process() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [pinnedHeight, setPinnedHeight] = useState(FALLBACK_PINNED_HEIGHT);
 
-  // The pinned view is sized to the actual card+dots content (measured),
-  // not the full viewport — a full-screen pin left large empty margins
-  // above/below the (much shorter) card while it was pinned.
-  useEffect(() => {
-    function measure() {
-      if (window.innerWidth >= 640) return;
-      const stage = stageRef.current;
-      if (!stage) return;
-      setPinnedHeight(stage.offsetHeight);
-    }
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
-
-  useEffect(() => {
-    let ticking = false;
-
-    function update() {
-      ticking = false;
-      const wrapper = wrapperRef.current;
-      const track = trackRef.current;
-      if (!wrapper || !track) return;
-
-      if (window.innerWidth >= 640) {
-        track.style.transform = "translateX(0%)";
-        return;
-      }
-
-      const total = wrapper.offsetHeight - pinnedHeight;
-      let progress = 0;
-      if (total > 0) {
-        const top = wrapper.getBoundingClientRect().top;
-        progress = Math.min(1, Math.max(0, -top / total));
-      }
-      const shift = progress * (CARD_COUNT - 1) * 100;
-      track.style.transform = `translateX(-${shift}%)`;
-      const nextIndex = Math.round(progress * (CARD_COUNT - 1));
-      setActiveIndex((prev) => (prev === nextIndex ? prev : nextIndex));
-    }
-
-    function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    update();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [pinnedHeight]);
+  function handleScroll() {
+    const el = scrollRef.current;
+    if (!el) return;
+    setActiveIndex(Math.round(el.scrollLeft / el.clientWidth));
+  }
 
   return (
-    <section id="process" className="bg-white px-4 pt-8 pb-4 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
+    <section id="process" className="bg-white px-4 pt-8 pb-16 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
       <div className="mx-auto flex max-w-container flex-col gap-10">
         <Reveal className="flex flex-col gap-4">
           <Eyebrow>ЯК МИ ПРАЦЮЄМО</Eyebrow>
@@ -182,40 +123,29 @@ export function Process() {
             </Reveal>
           ))}
         </div>
-      </div>
 
-      {/*
-        Mobile-only: the 4 cards are driven by vertical scroll instead of a
-        horizontal swipe. The wrapper is CARD_COUNT pinned-heights tall;
-        while the user scrolls through it, the inner view stays pinned
-        (position: sticky) and a scroll listener converts how far the
-        wrapper has scrolled past the top into a horizontal translateX on
-        the card track. The pinned height matches the actual card+dots
-        content (measured) rather than the full viewport, so the block
-        stays compact instead of leaving empty space above/below it. Once
-        the wrapper's height is exhausted, sticky naturally releases and
-        normal vertical scroll continues into the next section.
-      */}
-      <div ref={wrapperRef} className="relative sm:hidden" style={{ height: `${CARD_COUNT * pinnedHeight}px` }}>
-        <div className="sticky top-0 overflow-hidden" style={{ height: `${pinnedHeight}px` }}>
-          <div ref={stageRef}>
-            <div ref={trackRef} className="flex w-full">
-              {processCards.map((card) => (
-                <div key={card.number} className="w-full shrink-0">
-                  <ProcessCardContent card={card} />
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 flex justify-center gap-2">
-              {processCards.map((_, i) => (
-                <span
-                  key={i}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === activeIndex ? "w-6 bg-navy" : "w-1.5 bg-border"
-                  }`}
-                />
-              ))}
-            </div>
+        {/* Mobile-only: one-card-at-a-time swipeable slider */}
+        <div className="sm:hidden">
+          <div
+            ref={scrollRef}
+            onScroll={handleScroll}
+            className="flex snap-x snap-mandatory overflow-x-auto"
+          >
+            {processCards.map((card) => (
+              <div key={card.number} className="w-full shrink-0 snap-center">
+                <ProcessCardContent card={card} />
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 flex justify-center gap-2">
+            {processCards.map((_, i) => (
+              <span
+                key={i}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === activeIndex ? "w-6 bg-navy" : "w-1.5 bg-border"
+                }`}
+              />
+            ))}
           </div>
         </div>
       </div>

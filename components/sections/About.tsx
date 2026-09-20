@@ -19,7 +19,7 @@ const cards = [
 
 export function About() {
   return (
-    <section id="about" className="bg-white px-4 pt-16 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
+    <section id="about" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
       <div className="mx-auto flex max-w-container flex-col gap-14 lg:gap-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-20">
           <Reveal className="flex shrink-0 flex-col gap-8 lg:w-[300px]">
