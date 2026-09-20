@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-type Segment = { word: string; amber?: boolean } | { image: string; alt: string };
+type Segment = { word: string; amber?: boolean } | { image: string; alt: string } | { break: true };
 
 export function InlineImageHeading({
   segments,
@@ -14,7 +14,9 @@ export function InlineImageHeading({
       className={`flex flex-wrap items-center gap-x-2.5 gap-y-2 text-[28px] font-bold leading-[1.2] text-navy sm:text-[32px] lg:gap-x-3 lg:text-[34px] ${className}`}
     >
       {segments.map((seg, i) =>
-        "word" in seg ? (
+        "break" in seg ? (
+          <span key={i} className="basis-full sm:hidden" aria-hidden />
+        ) : "word" in seg ? (
           <span key={i} className={seg.amber ? "text-amber" : undefined}>
             {seg.word}
           </span>

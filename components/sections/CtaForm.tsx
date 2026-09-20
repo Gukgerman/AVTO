@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { submitBooking } from "@/lib/submit-booking";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 
 const points = ["Безкоштовна консультація", "Фіксована вартість оренди", "Жодних прихованих застав"];
 
@@ -60,7 +61,14 @@ export function CtaForm() {
               Забронюйте преміум авто вже сьогодні
             </h2>
             <p className="text-sm leading-relaxed text-white/70 sm:text-base lg:max-w-[355px]">
-              Залиште контакти — підберемо авто під вашу подію і зафіксуємо ціну без доплат
+              <span className="sm:hidden">
+                Залиште контакти — підберемо
+                <br />
+                авто під вашу подію і зафіксуємо ціну без доплат
+              </span>
+              <span className="hidden sm:inline">
+                Залиште контакти — підберемо авто під вашу подію і зафіксуємо ціну без доплат
+              </span>
             </p>
             <ul className="flex flex-col gap-2.5 lg:max-w-[460px]">
               {points.map((p) => (
@@ -115,7 +123,7 @@ export function CtaForm() {
                 >
                   <span>{status === "submitting" ? "Надсилаємо…" : "Забронювати авто"}</span>
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-navy-dark text-amber transition-transform group-hover:rotate-45">
-                    ↗
+                    <ArrowUpRightIcon className="h-4 w-4" />
                   </span>
                 </button>
 

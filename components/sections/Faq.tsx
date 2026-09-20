@@ -11,7 +11,7 @@ export function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
+    <section id="faq" className="bg-white px-4 pt-8 pb-16 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
       <div className="mx-auto flex max-w-container flex-col gap-10 lg:flex-row lg:gap-20">
         <Reveal className="flex flex-col gap-4 lg:w-[420px] lg:shrink-0">
           <Eyebrow>ПИТАННЯ-ВІДПОВІДІ</Eyebrow>

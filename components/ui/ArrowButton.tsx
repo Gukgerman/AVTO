@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 
 type Variant = "amber" | "dark" | "light";
 
@@ -17,12 +18,13 @@ interface ArrowButtonProps {
   onClick?: () => void;
   type?: "button" | "submit";
   className?: string;
+  wrapperClassName?: string;
 }
 
 const sizeStyles = {
-  sm: { pad: "pl-4 pr-1 py-1", text: "text-[13px]", icon: "h-[30px] w-[30px] text-[12px]", gap: "gap-2.5" },
-  md: { pad: "pl-[22px] pr-[5px] py-[5px]", text: "text-sm", icon: "h-[34px] w-[34px] text-[13px]", gap: "gap-[14px]" },
-  lg: { pad: "pl-[26px] pr-[6px] py-[6px]", text: "text-base", icon: "h-11 w-11 text-base", gap: "gap-[18px]" },
+  sm: { pad: "pl-4 pr-1 py-1", text: "text-[13px]", icon: "h-[30px] w-[30px]", iconSvg: "h-3 w-3", gap: "gap-2.5" },
+  md: { pad: "pl-[22px] pr-[5px] py-[5px]", text: "text-sm", icon: "h-[34px] w-[34px]", iconSvg: "h-[13px] w-[13px]", gap: "gap-[14px]" },
+  lg: { pad: "pl-[26px] pr-[6px] py-[6px]", text: "text-base", icon: "h-11 w-11", iconSvg: "h-4 w-4", gap: "gap-[18px]" },
 };
 
 export function ArrowButton({
@@ -33,6 +35,7 @@ export function ArrowButton({
   onClick,
   type = "button",
   className = "",
+  wrapperClassName = "",
 }: ArrowButtonProps) {
   const v = variantStyles[variant];
   const s = sizeStyles[size];
@@ -45,21 +48,21 @@ export function ArrowButton({
       <span
         className={`flex ${s.icon} shrink-0 items-center justify-center rounded-full ${v.iconBg} ${v.iconText} transition-transform duration-300 group-hover:rotate-45`}
       >
-        ↗
+        <ArrowUpRightIcon className={s.iconSvg} />
       </span>
     </span>
   );
 
   if (href) {
     return (
-      <Link href={href} className="inline-block">
+      <Link href={href} className={`inline-block ${wrapperClassName}`}>
         {content}
       </Link>
     );
   }
 
   return (
-    <button type={type} onClick={onClick} className="inline-block">
+    <button type={type} onClick={onClick} className={`inline-block ${wrapperClassName}`}>
       {content}
     </button>
   );

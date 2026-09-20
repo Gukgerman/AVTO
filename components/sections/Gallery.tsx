@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 
 const tiles = [
   { image: "/images/gallery-1.jpg", label: "Mercedes-Benz S-Class · 2023", featured: true, span: "lg:col-span-3" },
@@ -12,7 +13,7 @@ const tiles = [
 
 export function Gallery() {
   return (
-    <section id="gallery" className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
+    <section id="gallery" className="bg-white px-4 pt-16 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
       <div className="mx-auto flex max-w-container flex-col gap-10">
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-4">
@@ -23,7 +24,10 @@ export function Gallery() {
               для щоденної оренди
             </h2>
           </div>
-          <ArrowButton variant="light" size="sm">
+          <ArrowButton href="#form" variant="dark" size="md" wrapperClassName="self-start sm:hidden">
+            Весь каталог
+          </ArrowButton>
+          <ArrowButton href="#form" variant="light" size="sm" wrapperClassName="hidden sm:inline-block">
             Весь каталог
           </ArrowButton>
         </Reveal>
@@ -60,7 +64,7 @@ export function Gallery() {
                       </span>
                       {tile.featured && (
                         <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-amber font-bold text-navy transition-transform duration-300 group-hover:rotate-45">
-                          ↗
+                          <ArrowUpRightIcon className="h-4 w-4" />
                         </span>
                       )}
                     </div>

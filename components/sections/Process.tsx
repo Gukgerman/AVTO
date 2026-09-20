@@ -3,6 +3,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { InlineImageHeading } from "@/components/ui/InlineImageHeading";
 import { Reveal } from "@/components/ui/Reveal";
 import { processCards } from "@/lib/process-data";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 
 export function Process() {
   return (
@@ -21,7 +22,14 @@ export function Process() {
             ]}
           />
           <p className="max-w-[700px] text-[15px] leading-relaxed text-gray">
-            Кожен крок прозорий — від заявки до передачі ключів, без прихованих умов.
+            <span className="sm:hidden">
+              Кожен крок прозорий — від заявки до
+              <br />
+              передачі ключів, без прихованих умов.
+            </span>
+            <span className="hidden sm:inline">
+              Кожен крок прозорий — від заявки до передачі ключів, без прихованих умов.
+            </span>
           </p>
         </Reveal>
 
@@ -64,6 +72,15 @@ export function Process() {
                           <br />
                           у зручне місце в Одесі
                         </>
+                      ) : card.number === "02" ? (
+                        <>
+                          <span className="sm:hidden">
+                            Погоджуємо деталі й фіксуємо
+                            <br />
+                            ціну в договорі оренди
+                          </span>
+                          <span className="hidden sm:inline">{card.text}</span>
+                        </>
                       ) : (
                         card.text
                       )}
@@ -75,7 +92,7 @@ export function Process() {
                       aria-hidden
                       className="relative mt-6 flex h-11 w-11 items-center justify-center rounded-full bg-amber font-bold text-navy transition-transform duration-300 group-hover:rotate-45"
                     >
-                      ↗
+                      <ArrowUpRightIcon className="h-4 w-4" />
                     </span>
                   )}
                 </CardTag>

@@ -5,7 +5,7 @@ import { useInView, animate } from "framer-motion";
 
 export function Counter({ to, duration = 1.4 }: { to: number; duration?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: true, margin: "0px", amount: 0 });
   const [value, setValue] = useState(0);
 
   useEffect(() => {

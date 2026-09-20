@@ -18,7 +18,7 @@ export function Hero() {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-navy-dark/50" />
+        <div className="absolute inset-0 bg-navy-dark/56 sm:bg-navy-dark/50" />
 
         {/* top nav */}
         <div className="relative z-20 flex items-center justify-between">

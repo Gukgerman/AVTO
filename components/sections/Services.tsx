@@ -7,6 +7,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { serviceSlides, TOTAL_PLANNED_SLIDES } from "@/lib/services-data";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
 
 const slideTransition = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -30,7 +31,7 @@ export function Services() {
   }
 
   return (
-    <section id="services" className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-[60px] lg:pt-11 lg:pb-[53px]">
+    <section id="services" className="bg-white px-4 pt-8 pb-16 sm:px-6 sm:py-20 lg:px-[60px] lg:pt-11 lg:pb-[53px]">
       <div className="mx-auto flex max-w-container flex-col gap-8 lg:gap-10">
         <Reveal>
           <Eyebrow>Послуги</Eyebrow>
@@ -169,14 +170,14 @@ export function Services() {
                   onClick={goPrev}
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border text-gray transition-all duration-300 hover:scale-105 hover:bg-surface-light"
                 >
-                  ←
+                  <ChevronLeftIcon className="h-4 w-4" />
                 </button>
                 <button
                   aria-label="Наступний слайд"
                   onClick={goNext}
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy text-white transition-all duration-300 hover:scale-105 hover:bg-navy/90"
                 >
-                  →
+                  <ChevronRightIcon className="h-4 w-4" />
                 </button>
               </div>
             </div>

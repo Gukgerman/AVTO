@@ -26,7 +26,14 @@ export function Advantages() {
           <Reveal className="flex flex-1 flex-col gap-5">
             <Eyebrow tone="light">ПЕРЕВАГИ</Eyebrow>
             <h2 className="max-w-[590px] font-display text-2xl font-bold leading-tight text-white sm:text-[32px] lg:max-w-none lg:text-[34px] lg:leading-[1.22]">
-              <span className="lg:hidden">
+              <span className="sm:hidden">
+                Гарантуємо прозорість на кожному кроці —
+                <br />
+                від бронювання до
+                <br />
+                повернення авто
+              </span>
+              <span className="hidden sm:inline lg:hidden">
                 Гарантуємо прозорість на кожному кроці — від бронювання до повернення авто
               </span>
               <span className="hidden lg:inline">

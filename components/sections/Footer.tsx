@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
+import { ArrowUpRightIcon } from "@/components/ui/icons";
 
 const navLinks = [
   { label: "Про нас", href: "#about" },
@@ -67,7 +68,7 @@ export function Footer() {
         </div>
 
         <div className="relative flex flex-1 flex-col">
-          <nav className="flex flex-wrap gap-6 sm:justify-end">
+          <nav className="hidden gap-6 sm:flex sm:flex-wrap sm:justify-end">
             {navLinks.map((link) => (
               <a
                 key={link.label}
@@ -109,10 +110,25 @@ export function Footer() {
             >
               <span>Написати в Telegram</span>
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-dark text-amber transition-transform group-hover:rotate-45">
-                ↗
+                <ArrowUpRightIcon className="h-[15px] w-[15px]" />
               </span>
             </a>
           </Reveal>
+
+          {/* Mobile-only: same transparent car asset as Desktop, scaled to ~90% of
+              the Desktop container's proportional height and adapted to mobile width. */}
+          <div className="mt-10 sm:hidden">
+            <div className="relative w-full overflow-hidden" style={{ aspectRatio: "1.71" }}>
+              <Image
+                src="/images/footer-car.png"
+                alt="Преміум авто"
+                width={1949}
+                height={807}
+                className="pointer-events-none absolute max-w-none"
+                style={{ left: "-2.71%", top: "7.63%", width: "133.05%", height: "auto" }}
+              />
+            </div>
+          </div>
         </div>
 
         <div className="relative mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
@@ -126,7 +142,7 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="relative mt-4 text-center text-[13px] text-white/60">
+        <p className="relative mt-4 text-left text-[13px] text-white/60 sm:text-center">
           РОЗРОБЛЕНО{" "}
           <a
             href="https://miro-form.com/"
