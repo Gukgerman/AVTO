@@ -5,26 +5,10 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary } from "@/lib/i18n";
 
-const features = [
-  {
-    title: "Прозорі ціни",
-    text: "Фіксована вартість оренди без прихованих доплат",
-    mobileBreakBefore: "без прихованих доплат",
-  },
-  {
-    title: "Особиста перевірка",
-    text: "Оглядаємо авто наживо перед кожною орендою",
-    mobileBreakBefore: "кожною орендою",
-  },
-  {
-    title: "Юридичний супровід",
-    text: "Готуємо договір оренди та всі документи",
-    mobileBreakBefore: "та всі документи",
-  },
-];
-
-export function Advantages() {
+export function Advantages({ t }: { t: Dictionary["advantages"] }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -51,33 +35,22 @@ export function Advantages() {
         <div className="relative">
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
           <Reveal className="flex flex-1 flex-col gap-5">
-            <Eyebrow tone="light">ПЕРЕВАГИ</Eyebrow>
+            <Eyebrow tone="light">{t.eyebrow}</Eyebrow>
             <h2 className="max-w-[590px] font-display text-2xl font-bold leading-tight text-white sm:text-[32px] lg:max-w-none lg:text-[34px] lg:leading-[1.22]">
               <span className="sm:hidden">
-                Гарантуємо прозорість на кожному кроці —
-                <br />
-                від бронювання до
-                <br />
-                повернення авто
+                <Lines lines={t.headingMobile} />
               </span>
-              <span className="hidden sm:inline lg:hidden">
-                Гарантуємо прозорість на кожному кроці — від бронювання до повернення авто
-              </span>
+              <span className="hidden sm:inline lg:hidden">{t.headingTablet}</span>
               <span className="hidden lg:inline">
-                Гарантуємо прозорість на
-                <br />
-                кожному кроці — від бронювання
-                <br />
-                до повернення авто
+                <Lines lines={t.headingDesktop} />
               </span>
             </h2>
             <p className="max-w-[500px] text-sm leading-relaxed text-white/65 sm:text-base lg:max-w-[454px]">
-              Клієнт бачить реальний стан авто і повну
-              вартість оренди ще до оплати — жодних прихованих комісій.
+              {t.text}
             </p>
             <div>
               <ArrowButton href="#form" variant="amber" size="lg">
-                Отримати консультацію
+                {t.cta}
               </ArrowButton>
             </div>
           </Reveal>
@@ -97,16 +70,14 @@ export function Advantages() {
                 <Image src="/icons/shield.svg" alt="" width={14} height={15} className="-scale-y-100" />
               </span>
               <p className="text-sm text-white">
-                Перевіряємо кожне авто особисто
-                <br />
-                перед кожною орендою
+                <Lines lines={t.videoCaption} />
               </p>
             </div>
           </Reveal>
         </div>
 
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 lg:mt-10">
-            {features.map((f, i) => (
+            {t.features.map((f, i) => (
               <Reveal
                 key={f.title}
                 delay={i * 0.08}

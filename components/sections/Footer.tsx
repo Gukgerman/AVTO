@@ -1,24 +1,11 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
-
-const navLinks = [
-  { label: "Про нас", href: "#about" },
-  { label: "Послуги", href: "#services" },
-  { label: "Переваги", href: "#" },
-  { label: "Контакти", href: "#footer", active: true },
-];
-
-const contacts = [
-  { label: "Телефон", value: "+380 93 123 21 21" },
-  { label: "Email", value: "hello@prestigecars.ua" },
-  { label: "Офіс в Одесі", value: "вул. Дерибасівська, 5" },
-  { label: "Графік роботи", value: "Щодня, 8:00–22:00" },
-];
+import type { Dictionary } from "@/lib/i18n";
 
 const socials = ["Instagram", "Telegram", "Facebook"];
 
-export function Footer() {
+export function Footer({ t }: { t: Dictionary["footer"] }) {
   return (
     <footer id="footer" className="bg-white px-3 pt-5 pb-10 sm:px-4 sm:py-14 lg:px-6 lg:pt-[32px] lg:pb-16">
       <div
@@ -59,7 +46,7 @@ export function Footer() {
         >
           <Image
             src="/images/footer-car.png"
-            alt="Преміум авто"
+            alt={t.carAlt}
             width={1949}
             height={807}
             className="absolute max-w-none"
@@ -69,7 +56,7 @@ export function Footer() {
 
         <div className="relative flex flex-1 flex-col">
           <nav className="hidden gap-6 sm:flex sm:flex-wrap sm:justify-end">
-            {navLinks.map((link) => (
+            {t.nav.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -86,15 +73,15 @@ export function Footer() {
             <div className="flex flex-col gap-3">
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-amber" />
-                <span className="text-[13px] font-semibold uppercase text-white/60">Контакти</span>
+                <span className="text-[13px] font-semibold uppercase text-white/60">{t.eyebrow}</span>
               </span>
               <h2 className="max-w-[460px] font-display text-2xl font-bold leading-tight text-white sm:text-[28px] lg:text-[34px] lg:leading-[1.22]">
-                Готові забронювати авто вже сьогодні
+                {t.heading}
               </h2>
             </div>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-5 sm:grid-cols-2 sm:max-w-[480px]">
-              {contacts.map((c) => (
+              {t.contacts.map((c) => (
                 <div key={c.label}>
                   <p className="text-xs text-white/50">{c.label}</p>
                   <p className="mt-1 text-base font-semibold text-white">{c.value}</p>
@@ -108,7 +95,7 @@ export function Footer() {
               rel="noreferrer"
               className="group inline-flex w-fit items-center gap-[18px] rounded-pill bg-amber py-[6px] pl-[26px] pr-[6px] font-semibold text-navy transition-transform hover:scale-[1.02]"
             >
-              <span>Написати в Telegram</span>
+              <span>{t.telegramCta}</span>
               <span className="flex h-10 w-10 items-center justify-center rounded-full bg-navy-dark text-amber transition-transform group-hover:rotate-45">
                 <ArrowUpRightIcon className="h-[15px] w-[15px]" />
               </span>
@@ -122,7 +109,7 @@ export function Footer() {
             <div className="relative w-full overflow-hidden" style={{ aspectRatio: "1.71" }}>
               <Image
                 src="/images/footer-car.png"
-                alt="Преміум авто"
+                alt={t.carAlt}
                 width={1949}
                 height={807}
                 className="pointer-events-none absolute max-w-none"
@@ -133,7 +120,7 @@ export function Footer() {
         </div>
 
         <div className="relative mt-10 flex flex-col gap-4 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[13px] text-white/60">© 2026 PRESTIGE. Усі права захищені.</p>
+          <p className="text-[13px] text-white/60">{t.copyright}</p>
           <div className="flex gap-5">
             {socials.map((s) => (
               <a key={s} href="#" className="text-[13px] text-white/60 transition-colors hover:text-white">
@@ -144,7 +131,7 @@ export function Footer() {
         </div>
 
         <p className="relative mt-4 text-left text-[13px] text-white/60 sm:text-center">
-          РОЗРОБЛЕНО{" "}
+          {t.developedBy}{" "}
           <a
             href="https://miro-form.com/"
             target="_blank"

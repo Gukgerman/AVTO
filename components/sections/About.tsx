@@ -4,26 +4,30 @@ import { InlineImageHeading } from "@/components/ui/InlineImageHeading";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { Counter } from "@/components/ui/Counter";
+import type { Dictionary } from "@/lib/i18n";
 
-const stats = [
-  { main: "24/7", count: null, suffix: "", amber: false, label: "підтримка клієнтів" },
-  { main: "20", count: 20, suffix: " Lux", amber: false, label: "авто в автопарку" },
-  { main: "250", count: 250, suffix: " км", amber: true, label: "включено в добу*" },
+const statValues = [
+  { main: "24/7", count: null, amber: false },
+  { main: "20", count: 20, amber: false },
+  { main: "250", count: 250, amber: true },
 ];
 
-const cards = [
-  { title: "Підбір авто", text: "Обираєте модель під подію чи поїздку", image: "/images/about-1.jpg" },
-  { title: "Огляд і договір", text: "Перевіряємо авто та підписуємо документи", video: "/video/wmremove-transformed.mp4" },
-  { title: "Подача авто", text: "Привозимо авто в будь-яку точку Одеси", image: "/images/about-3.jpg" },
+const cardMedia: { image?: string; video?: string }[] = [
+  { image: "/images/about-1.jpg" },
+  { video: "/video/wmremove-transformed.mp4" },
+  { image: "/images/about-3.jpg" },
 ];
 
-export function About() {
+export function About({ t }: { t: Dictionary["about"] }) {
+  const stats = statValues.map((v, i) => ({ ...v, ...t.stats[i] }));
+  const cards = cardMedia.map((m, i) => ({ ...m, ...t.cards[i] }));
+
   return (
     <section id="about" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[100px]">
       <div className="mx-auto flex max-w-container flex-col gap-14 lg:gap-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-20">
           <Reveal className="flex shrink-0 flex-col gap-8 lg:w-[300px]">
-            <Eyebrow>ПРО НАС</Eyebrow>
+            <Eyebrow>{t.eyebrow}</Eyebrow>
             <div className="grid grid-cols-2 gap-x-8 gap-y-6">
               {stats.map((s, i) => (
                 <div key={s.label} className={i === 2 ? "col-span-2" : undefined}>
@@ -46,28 +50,14 @@ export function About() {
           <Reveal delay={0.1} className="flex flex-1 flex-col gap-6">
             <InlineImageHeading
               className="lg:max-w-[756px]"
-              segments={[
-                { word: "Кожне" },
-                { word: "авто" },
-                { word: "проходить" },
-                { word: "повну", amber: true },
-                { image: "/images/chip-about.png", alt: "" },
-                { word: "підготовку,", amber: true },
-                { word: "перш" },
-                { word: "ніж" },
-                { word: "потрапити" },
-                { break: true },
-                { word: "до" },
-                { word: "Вас" },
-              ]}
+              segments={t.heading}
             />
             <p className="max-w-[640px] text-base leading-relaxed text-gray sm:text-lg">
-              Особисто контролюємо кожен етап оренди — від перевірки автомобіля до його
-              повернення. Завжди на зв&rsquo;язку та уважні до кожної деталі.
+              {t.text}
             </p>
             <div>
               <ArrowButton href="#services" variant="dark" size="lg">
-                Дізнатись більше
+                {t.cta}
               </ArrowButton>
             </div>
           </Reveal>

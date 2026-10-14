@@ -2,6 +2,8 @@ export interface BookingPayload {
   name: string;
   phone: string;
   date: string;
+  /** Site language the request was sent from. */
+  locale: "uk" | "en";
 }
 
 /**

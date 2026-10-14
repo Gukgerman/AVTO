@@ -5,14 +5,15 @@ import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { InlineImageHeading } from "@/components/ui/InlineImageHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { processCards, type ProcessCard } from "@/lib/process-data";
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary, ProcessCard } from "@/lib/i18n/types";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
 
-function ProcessCardContent({ card }: { card: ProcessCard }) {
+function ProcessCardContent({ card, bookCta }: { card: ProcessCard; bookCta: string }) {
   const CardTag = card.featured ? "a" : "div";
   return (
     <CardTag
-      {...(card.featured ? { href: "#form", "aria-label": "Забронювати авто" } : {})}
+      {...(card.featured ? { href: "#form", "aria-label": bookCta } : {})}
       className={`group relative flex h-full min-h-[372px] flex-col justify-between overflow-hidden rounded-3xl px-9 pb-8 pt-[76px] transition-all duration-300 hover:-translate-y-1 ${
         card.featured
           ? "bg-navy-dark"
@@ -35,27 +36,12 @@ function ProcessCardContent({ card }: { card: ProcessCard }) {
           {card.title}
         </h3>
         <p className={`text-base ${card.featured ? "text-white/65" : "text-gray"}`}>
-          {card.number === "03" ? (
-            <>
-              Привозимо чисте авто
-              <br />
-              у зручне місце в Одесі
-            </>
-          ) : card.number === "02" ? (
+          {card.textLines ? (
+            <Lines lines={card.textLines} />
+          ) : card.mobileTextLines ? (
             <>
               <span className="sm:hidden">
-                Погоджуємо деталі й фіксуємо
-                <br />
-                ціну в договорі оренди
-              </span>
-              <span className="hidden sm:inline">{card.text}</span>
-            </>
-          ) : card.number === "04" ? (
-            <>
-              <span className="sm:hidden">
-                Повертаєте авто в обумовлений
-                <br />
-                час і місце — без зайвих питань
+                <Lines lines={card.mobileTextLines} />
               </span>
               <span className="hidden sm:inline">{card.text}</span>
             </>
@@ -77,7 +63,8 @@ function ProcessCardContent({ card }: { card: ProcessCard }) {
   );
 }
 
-export function Process() {
+export function Process({ t, bookCta }: { t: Dictionary["process"]; bookCta: string }) {
+  const processCards = t.cards;
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -91,27 +78,15 @@ export function Process() {
     <section id="process" className="bg-white px-4 pt-8 pb-16 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
       <div className="mx-auto flex max-w-container flex-col gap-10">
         <Reveal className="flex flex-col gap-4">
-          <Eyebrow>ЯК МИ ПРАЦЮЄМО</Eyebrow>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
           <InlineImageHeading
-            segments={[
-              { word: "Ваш" },
-              { image: "/images/chip-process.png", alt: "" },
-              { word: "маршрут" },
-              { break: true },
-              { word: "до" },
-              { word: "преміум", amber: true },
-              { word: "авто" },
-            ]}
+            segments={t.heading}
           />
           <p className="max-w-[700px] text-[15px] leading-relaxed text-gray">
             <span className="sm:hidden">
-              Кожен крок прозорий — від заявки до
-              <br />
-              передачі ключів, без прихованих умов.
+              <Lines lines={t.textMobile} />
             </span>
-            <span className="hidden sm:inline">
-              Кожен крок прозорий — від заявки до передачі ключів, без прихованих умов.
-            </span>
+            <span className="hidden sm:inline">{t.text}</span>
           </p>
         </Reveal>
 
@@ -119,7 +94,7 @@ export function Process() {
         <div className="hidden sm:grid sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
           {processCards.map((card, i) => (
             <Reveal key={card.number} delay={i * 0.06}>
-              <ProcessCardContent card={card} />
+              <ProcessCardContent card={card} bookCta={bookCta} />
             </Reveal>
           ))}
         </div>
@@ -133,7 +108,7 @@ export function Process() {
           >
             {processCards.map((card) => (
               <div key={card.number} className="w-full shrink-0 snap-center">
-                <ProcessCardContent card={card} />
+                <ProcessCardContent card={card} bookCta={bookCta} />
               </div>
             ))}
           </div>

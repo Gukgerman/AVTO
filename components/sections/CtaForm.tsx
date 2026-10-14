@@ -5,8 +5,8 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { submitBooking } from "@/lib/submit-booking";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
-
-const points = ["Безкоштовна консультація", "Фіксована вартість оренди", "Жодних прихованих застав"];
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary, Locale } from "@/lib/i18n/types";
 
 interface Errors {
   name?: string;
@@ -14,16 +14,17 @@ interface Errors {
   date?: string;
 }
 
-export function CtaForm() {
+export function CtaForm({ t, locale }: { t: Dictionary["form"]; locale: Locale }) {
+  const { fields } = t;
   const [values, setValues] = useState({ name: "", phone: "", date: "" });
   const [errors, setErrors] = useState<Errors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   function validate(): boolean {
     const next: Errors = {};
-    if (values.name.trim().length < 2) next.name = "Вкажіть ім’я та прізвище";
-    if (!/^\+?\d[\d\s()-]{7,}$/.test(values.phone.trim())) next.phone = "Перевірте номер телефону";
-    if (!values.date.trim()) next.date = "Оберіть дату початку оренди";
+    if (values.name.trim().length < 2) next.name = fields.name.error;
+    if (!/^\+?\d[\d\s()-]{7,}$/.test(values.phone.trim())) next.phone = fields.phone.error;
+    if (!values.date.trim()) next.date = fields.date.error;
     setErrors(next);
     return Object.keys(next).length === 0;
   }
@@ -33,7 +34,7 @@ export function CtaForm() {
     if (!validate()) return;
     setStatus("submitting");
     try {
-      const res = await submitBooking(values);
+      const res = await submitBooking({ ...values, locale });
       setStatus(res.ok ? "success" : "error");
     } catch {
       setStatus("error");
@@ -65,22 +66,18 @@ export function CtaForm() {
 
         <div className="relative flex flex-col gap-10 p-6 sm:p-10 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:p-16">
           <Reveal className="flex flex-col gap-5">
-            <Eyebrow tone="light">ЗАБРОНЮВАТИ АВТО</Eyebrow>
+            <Eyebrow tone="light">{t.eyebrow}</Eyebrow>
             <h2 className="font-display text-3xl font-bold uppercase leading-tight text-white sm:text-4xl lg:max-w-[840px] lg:text-[48px] lg:leading-[1.22]">
-              Забронюйте преміум авто вже сьогодні
+              {t.heading}
             </h2>
             <p className="text-sm leading-relaxed text-white/70 sm:text-base lg:max-w-[355px]">
               <span className="sm:hidden">
-                Залиште контакти — підберемо авто
-                <br />
-                під вашу подію і зафіксуємо ціну без доплат
+                <Lines lines={t.textMobile} />
               </span>
-              <span className="hidden sm:inline">
-                Залиште контакти — підберемо авто під вашу подію і зафіксуємо ціну без доплат
-              </span>
+              <span className="hidden sm:inline">{t.text}</span>
             </p>
             <ul className="flex flex-col gap-2.5 lg:max-w-[460px]">
-              {points.map((p) => (
+              {t.points.map((p) => (
                 <li key={p} className="flex items-center gap-2.5 text-[15px] text-white/85">
                   <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber text-[11px] font-bold text-navy">
                     ✓
@@ -97,29 +94,29 @@ export function CtaForm() {
                 <span className="flex h-12 w-12 items-center justify-center rounded-full bg-amber text-xl font-bold text-navy">
                   ✓
                 </span>
-                <p className="text-lg font-semibold text-white">Дякуємо! Заявку прийнято.</p>
-                <p className="text-sm text-white/65">Ми зв&rsquo;яжемося з вами найближчим часом.</p>
+                <p className="text-lg font-semibold text-white">{t.successTitle}</p>
+                <p className="text-sm text-white/65">{t.successText}</p>
               </div>
             ) : (
               <form noValidate onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <Field
-                  label="Ім’я та прізвище"
-                  placeholder="Іван Петренко"
+                  label={fields.name.label}
+                  placeholder={fields.name.placeholder}
                   value={values.name}
                   error={errors.name}
                   onChange={(v) => setValues((s) => ({ ...s, name: v }))}
                 />
                 <Field
-                  label="Номер телефону"
-                  placeholder="+380"
+                  label={fields.phone.label}
+                  placeholder={fields.phone.placeholder}
                   type="tel"
                   value={values.phone}
                   error={errors.phone}
                   onChange={(v) => setValues((s) => ({ ...s, phone: v }))}
                 />
                 <Field
-                  label="Дата початку оренди"
-                  placeholder="Наприклад, 25.09.2026"
+                  label={fields.date.label}
+                  placeholder={fields.date.placeholder}
                   value={values.date}
                   error={errors.date}
                   onChange={(v) => setValues((s) => ({ ...s, date: v }))}
@@ -130,7 +127,7 @@ export function CtaForm() {
                   disabled={status === "submitting"}
                   className="group mt-1 inline-flex items-center justify-between gap-[18px] rounded-pill bg-amber py-[6px] pl-[26px] pr-[6px] font-semibold text-navy transition-transform hover:scale-[1.02] disabled:opacity-60"
                 >
-                  <span>{status === "submitting" ? "Надсилаємо…" : "Забронювати авто"}</span>
+                  <span>{status === "submitting" ? t.submitting : t.submit}</span>
                   <span className="flex h-11 w-11 items-center justify-center rounded-full bg-navy-dark text-amber transition-transform group-hover:rotate-45">
                     <ArrowUpRightIcon className="h-4 w-4" />
                   </span>
@@ -138,14 +135,12 @@ export function CtaForm() {
 
                 {status === "error" && (
                   <p className="text-xs text-red-200">
-                    Щось пішло не так. Спробуйте ще раз або зателефонуйте нам.
+                    {t.error}
                   </p>
                 )}
 
                 <p className="text-[11px] leading-relaxed text-white/50">
-                  Натискаючи кнопку, ви погоджуєтесь
-                  <br />
-                  з політикою конфіденційності.
+                  <Lines lines={t.consent} />
                 </p>
               </form>
             )}

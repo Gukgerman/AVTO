@@ -6,16 +6,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
-import { serviceSlides, TOTAL_PLANNED_SLIDES } from "@/lib/services-data";
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary } from "@/lib/i18n";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icons";
 
 const slideTransition = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 
-export function Services() {
+export function Services({ t }: { t: Dictionary["services"] }) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const slide = serviceSlides[index];
-  const total = serviceSlides.length;
+  const slide = t.slides[index];
+  const total = t.slides.length;
 
   function goTo(next: number, dir: 1 | -1) {
     setDirection(dir);
@@ -34,7 +35,7 @@ export function Services() {
     <section id="services" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:pt-11 lg:pb-[53px]">
       <div className="mx-auto flex max-w-container flex-col gap-8 lg:gap-10">
         <Reveal>
-          <Eyebrow>Послуги</Eyebrow>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
         </Reveal>
 
         <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
@@ -53,46 +54,11 @@ export function Services() {
                   {slide.number}
                 </span>
                 <h3 className="font-display text-2xl font-extrabold text-navy sm:text-[32px] lg:text-[34px]">
-                  {slide.number === "02" && (
-                    <>
-                      Подача в
-                      <br />
-                      будь-яку точку
-                    </>
-                  )}
-                  {slide.number === "03" && (
-                    <>
-                      Авто для
-                      <br />
-                      особливої події
-                    </>
-                  )}
-                  {slide.number === "04" && (
-                    <>
-                      Оренда на
-                      <br />
-                      тривалий термін
-                    </>
-                  )}
-                  {slide.number !== "02" && slide.number !== "03" && slide.number !== "04" && slide.title}
+                  {slide.titleLines ? <Lines lines={slide.titleLines} /> : slide.title}
                 </h3>
                 <p className="text-[13px] text-gray">{slide.subtitle}</p>
                 <p className="max-w-[431px] text-sm leading-relaxed text-gray sm:text-[15px]">
-                  {slide.number === "02" && (
-                    <>
-                      Привозимо авто до готелю, аеропорту чи офісу —
-                      <br />
-                      точно у зазначений час, без затримок.
-                    </>
-                  )}
-                  {slide.number === "04" && (
-                    <>
-                      Знижки при довгостроковій оренді та
-                      <br />
-                      можливість заміни авто протягом терміну.
-                    </>
-                  )}
-                  {slide.number !== "02" && slide.number !== "04" && slide.description}
+                  {slide.descriptionLines ? <Lines lines={slide.descriptionLines} /> : slide.description}
                 </p>
 
                 <div className="flex flex-wrap gap-2.5">
@@ -138,7 +104,7 @@ export function Services() {
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-2 border border-dashed border-border bg-surface-light text-gray">
                       <span className="font-display text-sm font-semibold uppercase tracking-wide">
-                        Фото додається
+                        {t.photoPlaceholder}
                       </span>
                       <span className="text-xs">{slide.title}</span>
                     </div>
@@ -150,10 +116,10 @@ export function Services() {
             <div className="flex items-end justify-between gap-6">
               <div className="flex flex-1 flex-col gap-2.5">
                 <span className="text-[13px] font-medium text-gray">
-                  {String(index + 1).padStart(2, "0")}/{String(TOTAL_PLANNED_SLIDES).padStart(2, "0")}
+                  {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
                 </span>
                 <div className="flex gap-3">
-                  {Array.from({ length: TOTAL_PLANNED_SLIDES }).map((_, i) => (
+                  {Array.from({ length: total }).map((_, i) => (
                     <span
                       key={i}
                       className={`h-[3px] flex-1 rounded-full transition-colors duration-300 ${
@@ -166,14 +132,14 @@ export function Services() {
 
               <div className="flex gap-3">
                 <button
-                  aria-label="Попередній слайд"
+                  aria-label={t.prevSlide}
                   onClick={goPrev}
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-border text-gray transition-all duration-300 hover:scale-105 hover:bg-surface-light"
                 >
                   <ChevronLeftIcon className="h-4 w-4" />
                 </button>
                 <button
-                  aria-label="Наступний слайд"
+                  aria-label={t.nextSlide}
                   onClick={goNext}
                   className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-navy text-white transition-all duration-300 hover:scale-105 hover:bg-navy/90"
                 >

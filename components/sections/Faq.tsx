@@ -5,40 +5,30 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { InlineImageHeading } from "@/components/ui/InlineImageHeading";
 import { Reveal } from "@/components/ui/Reveal";
-import { faqItems } from "@/lib/faq-data";
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary } from "@/lib/i18n";
 
-export function Faq() {
+export function Faq({ t }: { t: Dictionary["faq"] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
     <section id="faq" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
       <div className="mx-auto flex max-w-container flex-col gap-10 lg:flex-row lg:gap-20">
         <Reveal className="flex flex-col gap-4 lg:w-[420px] lg:shrink-0">
-          <Eyebrow>ПИТАННЯ-ВІДПОВІДІ</Eyebrow>
+          <Eyebrow>{t.eyebrow}</Eyebrow>
           <InlineImageHeading
-            segments={[
-              { word: "Питання," },
-              { word: "які" },
-              { word: "нам" },
-              { image: "/images/chip-faq.png", alt: "" },
-              { word: "ставлять" },
-              { word: "найчастіше", amber: true },
-            ]}
+            segments={t.heading}
           />
           <p className="max-w-[380px] text-base leading-relaxed text-gray">
             <span className="sm:hidden">
-              Не знайшли відповідь? Напишіть
-              <br />
-              нам — відповімо протягом години.
+              <Lines lines={t.textMobile} />
             </span>
-            <span className="hidden sm:inline">
-              Не знайшли відповідь? Напишіть нам — відповімо протягом години.
-            </span>
+            <span className="hidden sm:inline">{t.text}</span>
           </p>
         </Reveal>
 
         <div className="flex flex-1 flex-col gap-4">
-          {faqItems.map((item, i) => {
+          {t.items.map((item, i) => {
             const open = openIndex === i;
             return (
               <Reveal key={item.question} delay={i * 0.05}>

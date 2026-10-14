@@ -2,17 +2,20 @@ import Image from "next/image";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { MobileMenu } from "@/components/MobileMenu";
 import { Reveal } from "@/components/ui/Reveal";
-import { navLinks } from "@/lib/nav";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
+import { Lines } from "@/components/ui/Lines";
+import type { Dictionary, Locale } from "@/lib/i18n";
 
 const avatars = ["/images/avatar-1.png", "/images/avatar-2.png", "/images/avatar-3.png"];
 
-export function Hero() {
+export function Hero({ locale, t }: { locale: Locale; t: Dictionary }) {
+  const { hero } = t;
   return (
     <section className="bg-white px-3 pt-3 pb-1.5 sm:px-4 sm:py-4 lg:px-6 lg:py-6">
       <div className="relative flex min-h-[640px] flex-col overflow-hidden rounded-[20px] bg-navy-dark p-5 sm:min-h-[760px] sm:rounded-[28px] sm:p-8 lg:h-[calc(100dvh-3rem)] lg:min-h-[640px] lg:rounded-[32px] lg:p-11">
         <Image
           src="/images/hero-bg.png"
-          alt="Преміум авто на подвір'ї сучасного будинку"
+          alt={hero.imageAlt}
           fill
           priority
           sizes="100vw"
@@ -27,7 +30,7 @@ export function Hero() {
           </span>
 
           <nav className="hidden items-center gap-8 lg:flex">
-            {navLinks.map((link) => (
+            {t.nav.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -38,13 +41,18 @@ export function Hero() {
             ))}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-6 lg:flex">
+            <LanguageSwitch
+              locale={locale}
+              t={t.langSwitch}
+              className="text-[15px] font-medium text-white/75 transition-colors hover:text-white"
+            />
             <ArrowButton href="#form" variant="light" size="sm">
-              Забронювати авто
+              {t.bookCta}
             </ArrowButton>
           </div>
 
-          <MobileMenu />
+          <MobileMenu locale={locale} nav={t.nav} bookCta={t.bookCta} langSwitch={t.langSwitch} labels={t.mobileMenu} />
         </div>
 
         {/* content */}
@@ -60,29 +68,26 @@ export function Hero() {
           <Reveal y={16} delay={1.3} className="inline-flex w-fit items-center gap-2 rounded-pill border border-white/25 bg-white/10 px-3.5 py-2 sm:px-4">
             <span className="h-2 w-2 animate-status-pulse rounded-full bg-amber" />
             <span className="text-xs font-semibold text-white/90 sm:text-[13px]">
-              3+ РОКІВ ОРЕНДИ В ОДЕСІ
+              {hero.badge}
             </span>
           </Reveal>
 
           <Reveal y={20} delay={1.42}>
             <h1 className="font-display text-[40px] font-black uppercase leading-[1.02] tracking-tight text-white sm:text-[64px] lg:text-[70px] xl:text-[100px]">
-              ПРЕМІУМ
-              <br />
-              АВТО В ОДЕСІ
+              <Lines lines={hero.titleLines} />
             </h1>
           </Reveal>
 
           <Reveal y={16} delay={1.54}>
             <p className="max-w-[500px] text-base leading-snug text-white/70 sm:text-lg sm:leading-relaxed">
-              Mercedes, BMW, Porsche та інші авто преміум-класу — швидка подача, без застав і
-              посередників.
+              {hero.description}
             </p>
           </Reveal>
 
           <Reveal y={16} delay={1.66} className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <div className="flex flex-wrap items-center gap-4 sm:gap-6">
               <ArrowButton href="#form" variant="amber" size="lg">
-                Забронювати авто
+                {t.bookCta}
               </ArrowButton>
 
               <div className="flex items-center gap-3.5">
@@ -97,15 +102,16 @@ export function Hero() {
                   ))}
                 </div>
                 <div className="text-sm">
-                  <p className="font-bold text-white">500+</p>
-                  <p className="text-white/65">відгуків кліентів</p>
+                  <p className="font-bold text-white">{hero.reviewsCount}</p>
+                  <p className="text-white/65">{hero.reviewsLabel}</p>
                 </div>
               </div>
             </div>
 
             <div className="flex gap-3 sm:gap-4">
-              <StatCard value="30 хв." label="подача авто по місту" />
-              <StatCard value="20 Lux" label="авто в автопарку" />
+              {hero.stats.map((stat) => (
+                <StatCard key={stat.label} value={stat.value} label={stat.label} />
+              ))}
             </div>
           </Reveal>
         </div>

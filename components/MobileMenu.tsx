@@ -2,16 +2,29 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { navLinks } from "@/lib/nav";
 import { ArrowButton } from "@/components/ui/ArrowButton";
+import { LanguageSwitch } from "@/components/LanguageSwitch";
+import type { Dictionary, Locale, NavLink } from "@/lib/i18n/types";
 
-export function MobileMenu() {
+export function MobileMenu({
+  locale,
+  nav,
+  bookCta,
+  langSwitch,
+  labels,
+}: {
+  locale: Locale;
+  nav: NavLink[];
+  bookCta: string;
+  langSwitch: Dictionary["langSwitch"];
+  labels: Dictionary["mobileMenu"];
+}) {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="lg:hidden">
       <button
-        aria-label={open ? "Закрити меню" : "Відкрити меню"}
+        aria-label={open ? labels.close : labels.open}
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 rounded-full bg-white/10"
@@ -33,7 +46,7 @@ export function MobileMenu() {
             transition={{ duration: 0.2 }}
             className="absolute left-4 right-4 top-full z-30 mt-3 flex flex-col gap-1 rounded-2xl bg-navy-dark p-4 shadow-2xl"
           >
-            {navLinks.map((link) => (
+            {nav.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -43,9 +56,15 @@ export function MobileMenu() {
                 {link.label}
               </a>
             ))}
+            <LanguageSwitch
+              locale={locale}
+              t={langSwitch}
+              onClick={() => setOpen(false)}
+              className="rounded-lg px-3 py-2.5 text-[15px] font-medium text-white/85 hover:bg-white/5"
+            />
             <div className="mt-2 px-3">
               <ArrowButton href="#form" variant="light" size="sm">
-                Забронювати авто
+                {bookCta}
               </ArrowButton>
             </div>
           </motion.div>

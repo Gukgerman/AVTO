@@ -3,6 +3,7 @@ import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { ArrowUpRightIcon } from "@/components/ui/icons";
+import type { Dictionary } from "@/lib/i18n";
 
 const tiles = [
   { image: "/images/gallery-1.jpg", label: "Mercedes-Benz S-Class · 2023", featured: true, span: "lg:col-span-3" },
@@ -11,24 +12,24 @@ const tiles = [
   { image: "/images/gallery-4.jpg", label: "Range Rover · 2022", featured: true, span: "lg:col-span-3" },
 ];
 
-export function Gallery() {
+export function Gallery({ t }: { t: Dictionary["gallery"] }) {
   return (
     <section id="gallery" className="bg-white px-4 pt-8 pb-8 sm:px-6 sm:py-20 lg:px-[60px] lg:py-[60px]">
       <div className="mx-auto flex max-w-container flex-col gap-10">
         <Reveal className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-4">
-            <Eyebrow>ФОТОГАЛЕРЕЯ</Eyebrow>
+            <Eyebrow>{t.eyebrow}</Eyebrow>
             <h2 className="max-w-[500px] font-display text-2xl font-bold leading-tight text-navy sm:text-[32px] lg:text-[34px]">
-              Автомобілі, <span className="text-amber">доступні</span>
+              {t.heading.before} <span className="text-amber">{t.heading.accent}</span>
               <br />
-              для щоденної оренди
+              {t.heading.after}
             </h2>
           </div>
           <ArrowButton href="#form" variant="dark" size="md" wrapperClassName="self-start sm:hidden">
-            Весь каталог
+            {t.cta}
           </ArrowButton>
           <ArrowButton href="#form" variant="light" size="sm" wrapperClassName="hidden sm:inline-block">
-            Весь каталог
+            {t.cta}
           </ArrowButton>
         </Reveal>
 
@@ -43,7 +44,7 @@ export function Gallery() {
                 >
                   <a
                     href="#form"
-                    aria-label={`Забронювати ${tile.label}`}
+                    aria-label={`${t.bookAriaPrefix} ${tile.label}`}
                     className={`group relative block aspect-[16/10] overflow-hidden rounded-3xl sm:aspect-[920/420] lg:aspect-auto lg:h-full`}
                   >
                     <Image
